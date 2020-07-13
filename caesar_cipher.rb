@@ -1,24 +1,19 @@
-puts "what string would you like to encrypt"
-    string = gets.chomp
-    string.upcase!
+def caesar_cipher(str, shift=1)
+  upcase_alpha = ("A".."Z").to_a
+  downcase_alpha = ("a".."z").to_a
+  str = str.split("")
+  cipher_string = ""
 
-values = string.split('').map(&:ord)
-
-new_values = values.map do |n| 
-  if n >= 65 && n <= 87 
-    print (n + 3).chr
-  elsif n == 90 
-    print (n - 25).chr
-  elsif n == 89
-    print (n - 24).chr
-  elsif n == 88 
-    print (n - 23).chr
-  else 
-    print n.chr
+  str.map do |letter|
+      if letter.upcase == letter.downcase
+        cipher_string += letter
+      elsif letter == letter.upcase
+        cipher_string += upcase_alpha[(upcase_alpha.index(letter) + shift) % 26]
+      elsif letter == letter.downcase
+        cipher_string += downcase_alpha[(downcase_alpha.index(letter) + shift) % 26]
+      end
+    end
+   puts cipher_string
   end
-end
-    
 
-
- 
-   
+  caesar_cipher("What a string!", 5)
