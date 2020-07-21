@@ -32,12 +32,6 @@ class TicTacToe
     puts " #{@board[6]} | #{@board[7]} | #{@board[8]}"
   end
 
-  # computer starts at 0 but we want inputs from the user to begin at 1
-
-  def input_to_index(input)
-    input.to_i - 1
-  end
-
   # method to replace index values with our tokens (X,O)
 
   def move(index, token = 'X')
@@ -53,17 +47,16 @@ class TicTacToe
   # method to make sure option is a valid spot on the board
 
   def valid_move?(input) 
-      input.between?(0,8) && !position_taken?(input)  
+    input.between?(0,8) && !position_taken?(input)  
   end
 
   # taking user input and applying the token to the board and confirming the user choice is valid
 
   def turn
     puts 'Choose spots 1-9'
-    index = gets.strip
-    index = input_to_index(index)
-    if valid_move?(index)
-      move(index, current_player)
+    input = gets.to_i - 1
+    if valid_move?(input)
+      move(input, current_player)
     else
       turn
     end
@@ -104,7 +97,7 @@ class TicTacToe
 
 # did we reach a full board with no winners?
 
-  def full? 
+  def full?
     turn_count == 9
   end
 
