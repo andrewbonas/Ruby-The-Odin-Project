@@ -3,33 +3,30 @@ class Mastermind
     def initialize()
         @computer_choice = computer_choice
         @gameplay = gameplay
-
     end
 
     def computer_choice
-      p @computer_code = (1..6).to_a.shuffle.take(4)
+     p  @computer_code = (1..6).to_a.shuffle.take(4)
     end
 
     def compare
-        
         pairs = @computer_code.zip(@human_guess)
         @matches = pairs.count { |computer,human| computer == human}
-        if @matches < 4 then
-            computer, human = pairs.reject {|computer,human| computer == human}.transpose
-                human.each do |n|
-                    i = computer.index(n)
-                    computer.delete_at(i) if i
-                end
-                @same_number = human.size - computer.size
-            end
-        end
-    end
-    
+          return unless @matches < 4
 
-    def match_symbol
-        @matches.times {puts "X"}
+        computer, human = pairs.reject {|computer,human| computer == human}.transpose
+          human.each do |n|
+            i = computer.index(n)
+            computer.delete_at(i) if i
+          end
+        @same_number = human.size - computer.size
+          end
+        end
+
+    def symbols
+        @matches.times {print 'X'}
         if @matches < 4 then
-            @matches.times {puts "X"}
+            @same_number.times {print 'O'}
         end
     end
 
@@ -40,15 +37,22 @@ class Mastermind
             puts 'Guess four numbers up to 6'
             @human_guess = gets.chomp.scan(/\d/).map(&:to_i)
             compare
-            print symbols
-              if @matches == 4
-                puts "You win! you guessed the correct code and beat the computer"
-            elsif i == 12
-                puts "Better luck"
-            end
-            i += 1
-        end
-        @human_guess
+            print "#{@human_guess.join(', ')} = "
+            symbols
+            puts
+            results
+        i += 1
+          end
     end
 
+    def results
+        if @matches == 4
+            puts 'You win! you guessed the correct code and beat the Computer'
+        elsif gameplay == 11
+            puts 'Better luck next time, the Computer wins'
+        end
+    end
+
+
     Mastermind.new
+   
