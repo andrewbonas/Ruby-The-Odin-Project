@@ -37,7 +37,7 @@ class Mastermind
 
     #Starts welcome message and asks if user would like to guess the code or create it.
     def decide
-      puts 'Welcome to mastermind'
+      puts 'Welcome to Mastermind'
       puts 'Would you like to guess the code or would you like to create the code? (type: create or guess)'
       decision = gets.chomp.downcase
         if decision == "create"
@@ -133,4 +133,4 @@ class Mastermind
       end
     end
 
-    Mastermind.new.decide
+Mastermind.new.decide
