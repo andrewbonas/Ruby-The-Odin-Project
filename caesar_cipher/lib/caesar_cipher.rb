@@ -13,7 +13,7 @@ def caesar_cipher(str, shift=1)
         cipher_string += downcase_alpha[(downcase_alpha.index(letter) + shift) % 26]
       end
     end
-   puts cipher_string
+    cipher_string
   end
 
-  caesar_cipher("What a string!", 5)
+puts caesar_cipher("What a string!", 5)
