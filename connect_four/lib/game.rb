@@ -18,15 +18,19 @@ class Game < Board
       puts 'Pick a column 1-7'
       @input = gets.to_i - 1
       if valid?
-        move(5, @input, current_player)
+        move(@input, current_player)
         print_board
       else
         play_round
       end
     end
   
+    def rounds
+     @counter = 0
+    end
+
     def game
-      @counter = 0
+      rounds
       until over?
         play_round
         @counter +=1
@@ -38,16 +42,25 @@ class Game < Board
       end
     end
   
-    def move(col, row, token = current_player)
-      @board[col][row] = token
-    end
+    def move(row, token = current_player)
+      n = 5
+      until n.zero? || @board[n][row] == @empty
+        n -= 1
+      end
+        
+      if @board[n][row] == @empty
+        @board[n][row] = token
+      else
+        puts "FULL, try another column"
+        game
+      end
+     end
   
     def valid?
       @input <= 6
     end
-  
-    def current_player
-      player = nil
+
+    def current_player(player = nil)
       if(@counter % 2).zero?
         player = 'X'
       else
@@ -57,7 +70,7 @@ class Game < Board
     end
   
     def tie?
-      @counter == 2
+      @counter == 3
     end
   
     def won?

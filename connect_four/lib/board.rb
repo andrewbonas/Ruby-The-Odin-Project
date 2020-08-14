@@ -8,13 +8,13 @@ class Board
       @board = []
       @rows = 6
       @columns = 7
-      hole = "\u25A2"
+      @empty = "\u25A2"
   
       @rows.times do |row|
       @board[row] = []
   
       @columns.times do |cols|
-      @board[row] << "#{hole.encode('utf-8')}"
+      @board[row] << "#{@empty.encode('utf-8')}"
         end
       end
       @board
