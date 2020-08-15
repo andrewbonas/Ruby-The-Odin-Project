@@ -14,9 +14,12 @@ class Board
       @board[row] = []
   
       @columns.times do |cols|
-      @board[row] << "#{@empty.encode('utf-8')}"
+      @board[row] << "."
         end
       end
+      @board
+    end
+    def board
       @board
     end
   

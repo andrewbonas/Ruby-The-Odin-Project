@@ -35,21 +35,21 @@ class Game < Board
         play_round
         @counter +=1
       end
-      if won?
-          'Way ta go'
+      if win?
+        puts "Congratulations #{current_player} you loose!"
       elsif tie?
-          'tie'
+         puts "It's a tie!"
       end
     end
   
-    def move(row, token = current_player)
+    def move(column, token = current_player)
       n = 5
-      until n.zero? || @board[n][row] == @empty
+      until n.zero? || @board[n][column] == "."
         n -= 1
       end
         
-      if @board[n][row] == @empty
-        @board[n][row] = token
+      if @board[n][column] == "."
+        @board[n][column] = token
       else
         puts "FULL, try another column"
         game
@@ -57,7 +57,7 @@ class Game < Board
      end
   
     def valid?
-      @input <= 6
+      @input <= 6 
     end
 
     def current_player(player = nil)
@@ -70,16 +70,47 @@ class Game < Board
     end
   
     def tie?
-      @counter == 3
-    end
-  
-    def won?
-  
+      @counter == 20
     end
   
     def over?
-      tie? || won? 
+      tie? || win?
     end
-  end
 
+    def win?
+      vertical_win? || hortizontal_win? || diagonal_win_down? || diagonal_win_up?
+    end
+    
+   def vertical_win?(board = @board)
+    board.each do |column|
+      column.each_index do |i, array = []|
+        4.times {|n| array << column[i + n]}
+        return true if connected?(array)
+      end
+          end
+          false
+   end
+    
+   def hortizontal_win?
+    vertical_win?(board.transpose)
+   end
+
+   def diagonal_win_down?(board = @board)
+    board.each_index do |c|
+      board[c].each_index do |r, array=[]|
+        4.times {|n| array << board[c+n][r+n] if board[c + n]}
+        return true if connected?(array)
+      end
+    end
+    false
+   end
+   
+   def diagonal_win_up?(board = @board)
+    diagonal_win_down?(board.map(&:reverse))
+   end
+
+   def connected?(array)
+    array.size == 4 && array.uniq.size == 1 && array[0] != "."
+   end
+end
   game = Game.new
