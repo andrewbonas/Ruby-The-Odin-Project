@@ -24,19 +24,16 @@ class Game < Board
         play_round
       end
     end
-  
-    def rounds
-     @counter = 0
-    end
 
     def game
-      rounds
+      @counter = 0
       until over?
         play_round
         @counter +=1
       end
+    
       if win?
-        puts "Congratulations #{current_player} you loose!"
+        puts "Game over. Sorry #{current_player} you loose!"
       elsif tie?
          puts "It's a tie!"
       end
@@ -70,7 +67,7 @@ class Game < Board
     end
   
     def tie?
-      @counter == 20
+      @counter == 42
     end
   
     def over?
@@ -86,9 +83,9 @@ class Game < Board
       column.each_index do |i, array = []|
         4.times {|n| array << column[i + n]}
         return true if connected?(array)
+        end
       end
-          end
-          false
+      false
    end
     
    def hortizontal_win?
@@ -113,4 +110,5 @@ class Game < Board
     array.size == 4 && array.uniq.size == 1 && array[0] != "."
    end
 end
-  game = Game.new
+
+Game.new
